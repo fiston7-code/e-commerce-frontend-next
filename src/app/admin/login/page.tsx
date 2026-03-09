@@ -1,4 +1,6 @@
 'use client';
+// ← Ce composant tourne côté client (navigateur)
+// Nécessaire pour React Hook Form et useRouter
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
+// Schéma de validation Zod
 const loginSchema = z.object({
   email: z.string().email('Email invalide'),
   password: z.string().min(6, 'Minimum 6 caractères'),
@@ -22,16 +25,17 @@ export default function LoginPage() {
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
-    register,
-    handleSubmit,
+    register,      // ← connecte les inputs au formulaire
+    handleSubmit,  // ← gère la soumission
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema), // ← validation Zod
   });
 
   const onSubmit = async (values: LoginForm) => {
     setServerError(null);
 
+    // Convertit en FormData pour la Server Action
     const formData = new FormData();
     formData.append('email', values.email);
     formData.append('password', values.password);
@@ -43,7 +47,9 @@ export default function LoginPage() {
       return;
     }
 
+    // ← redirect côté client après succès
     router.push('/admin/dashboard');
+    router.refresh(); // ← force le refresh du middleware
   };
 
   return (
@@ -59,18 +65,14 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-            {/* ERREUR SERVEUR */}
             {serverError && (
               <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg border border-red-200">
                 {serverError}
               </div>
             )}
 
-            {/* EMAIL */}
             <div className="space-y-1">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
+              <label htmlFor="email" className="text-sm font-medium">Email</label>
               <Input
                 id="email"
                 type="email"
@@ -83,11 +85,8 @@ export default function LoginPage() {
               )}
             </div>
 
-            {/* MOT DE PASSE */}
             <div className="space-y-1">
-              <label htmlFor="password" className="text-sm font-medium">
-                Mot de passe
-              </label>
+              <label htmlFor="password" className="text-sm font-medium">Mot de passe</label>
               <Input
                 id="password"
                 type="password"
@@ -100,12 +99,7 @@ export default function LoginPage() {
               )}
             </div>
 
-            {/* SUBMIT */}
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? 'Connexion...' : 'Se connecter'}
             </Button>
 

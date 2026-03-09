@@ -1,6 +1,3 @@
-// src/lib/auth.ts
-// ← pas de 'use server' ici
-
 import type { AdminUser } from './types';
 
 export const AUTH_COOKIES = {
@@ -10,13 +7,12 @@ export const AUTH_COOKIES = {
 
 export const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
+  secure: process.env.NODE_ENV === 'production', // ← correct
   sameSite: 'lax' as const,
   path: '/',
-  maxAge: 60 * 60 * 24 * 7, // 7 jours
+  maxAge: 60 * 60 * 24 * 7,
 };
 
-// ← utilisé dans les Server Components et Server Actions
 export function parseAdminUser(raw: string | undefined): AdminUser | null {
   if (!raw) return null;
   try {

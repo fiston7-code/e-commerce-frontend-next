@@ -1,6 +1,6 @@
 // src/lib/api.server.ts
 import { cookies } from 'next/headers';
-import { AUTH_COOKIES } from './auth';
+import { AUTH_COOKIES, parseAdminUser } from './auth';
 import type { Product, Category, PaginatedResponse } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
@@ -96,3 +96,16 @@ export const uploadApi = {
     return data.url;
   },
 };
+
+export async function getAdminSession() {
+  const cookieStore = await cookies();
+  const rawUser = cookieStore.get(AUTH_COOKIES.USER)?.value;
+  const token = cookieStore.get(AUTH_COOKIES.TOKEN)?.value;
+
+  if (!token || !rawUser) return null;
+
+  const admin = parseAdminUser(rawUser);
+  if (!admin) return null;
+
+  return { admin, token };
+}
