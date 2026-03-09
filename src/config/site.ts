@@ -20,9 +20,9 @@ export const siteConfig = {
   
     // ─── NAVIGATION DASHBOARD ─────────────────────────────────────────
   adminNav: [
-    { label: '📊 Dashboard', href: '/dashboard' }, // Retrait de /admin
-    { label: '📦 Produits', href: '/dashboard/products' },
-    { label: '🗂️ Catégories', href: '/dashboard/categories' },
+    { label: '📊 Dashboard', href: '/admin/dashboard' },
+    { label: '📦 Produits', href: '/admin/dashboard/products' },
+    { label: '🗂️ Catégories', href: '/admin/dashboard/categories' },
   ],
   
     // ─── FOOTER ───────────────────────────────────────────────────────
