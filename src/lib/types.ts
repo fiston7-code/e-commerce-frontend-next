@@ -41,3 +41,15 @@ export interface Category {
     categoryId?: string;
     isAvailable?: boolean;
   }
+
+  export interface AdminUser {
+    id: string;
+    name: string;
+    email: string;
+    role: 'ADMIN' | 'MANAGER' | 'AGENT';
+  }
+  
+  export interface LoginResponse {
+    accessToken: string;
+    admin: AdminUser;
+  }
