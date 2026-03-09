@@ -54,6 +54,9 @@ export const adminProductsApi = {
     fetcherServer<void>(`/products/${id}`, {
       method: 'DELETE',
     }),
+
+    getById: (id: string) =>
+      fetcherServer<Product>(`/products/${id}`),
 };
 
 export const adminCategoriesApi = {
