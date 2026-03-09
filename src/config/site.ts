@@ -23,6 +23,8 @@ export const siteConfig = {
     { label: '📊 Dashboard', href: '/admin/dashboard' },
     { label: '📦 Produits', href: '/admin/dashboard/products' },
     { label: '🗂️ Catégories', href: '/admin/dashboard/categories' },
+    { label: '+ Catégories', href: '/admin/dashboard/products/new' },
+
   ],
   
     // ─── FOOTER ───────────────────────────────────────────────────────

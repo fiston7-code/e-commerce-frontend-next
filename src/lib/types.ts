@@ -12,6 +12,7 @@ export interface Category {
     description?: string;
     priceUSD: number;
     priceCDF?: number;
+    costPrice?: number;
     stock: number;
     stockThreshold: number;
     images: string[];
